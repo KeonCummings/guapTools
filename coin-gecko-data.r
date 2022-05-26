@@ -24,16 +24,19 @@ searchCoinGeckoListData <- function(coin, coinGeckoData){
 }
 
 
+
 getCoinGeckoLinkedData <- function(num){	
 	linkedData = list()
 	for (i in 1:num) {
-		linkedData[[i]] = getCoinGeckoCoinListData(i)	
+		linkedData[[i]] = getCoinGeckoCoinListData(i)
+		# Sys.sleep(5) 
 	}
 	return(linkedData)
 }
 
 bindCoinGeckoSearchPages <- function(coinGeckoData){
-	c = rbind_pages(coinGeckoData)
+	c = rbind_pages(coinGeckoData[sapply(coinGeckoData, length)>0])
+	# c = rbind_pages(coinGeckoData)
 	c  = c[which(c$total_volume > 1),,drop = FALSE]
 	return(c)
 }
